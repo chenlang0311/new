@@ -9,4 +9,4 @@ npm run dev
 npm run build
 ```
 1. create tsconfig.json
-2. 
+2. cnpm install -g ts-node || ts-node-dev

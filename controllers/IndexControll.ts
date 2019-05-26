@@ -2,21 +2,26 @@ import {
     controller,
     httpGet,
     interfaces,
-    injectable,
     inject,
-    Router
+    Router,
+    TAGS,
+    provideThrowable,
+    TYPE
 }from "../ioc";
-import TYPES from "../constant/tags"
+import {Model} from "../models/User"
 
 @controller("/")
+@provideThrowable(TYPE.Controller,"IndexController")
 export default class IndexController implements interfaces.Controller{
     private indexService;
-    constructor(@inject(TYPES.IndexService) indexService){
+    constructor(@inject(TAGS.IndexService) indexService){
         this.indexService = indexService
     }
     @httpGet("/")
-    private async index(ctx: Router.IRouterContext,next:()=>Promise<any>):Promise<any>{
-        const result:string = this.indexService.getUser();
-        ctx.body = await ctx.render("index");
+    private async index(ctx: Router.IRouterContext,next: ()=>Promise<any>):Promise<any>{
+        const result:Model.User = this.indexService.getUser("0");
+        ctx.body = await ctx.render("index",{
+            data:result.name
+        });
     }
 }   

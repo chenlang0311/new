@@ -19,6 +19,7 @@ export default class IndexController implements interfaces.Controller{
     }
     @httpGet("/")
     private async index(ctx: Router.IRouterContext,next: ()=>Promise<any>):Promise<any>{
+        console.log(window.location.href);
         const result:Model.User = this.indexService.getUser("0");
         ctx.body = await ctx.render("index",{
             data:result.name
